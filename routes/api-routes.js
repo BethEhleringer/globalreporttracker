@@ -126,22 +126,25 @@ module.exports = function (app) {
 
   });
 
- /* app.get("/api/last_report", function (req, res) {
+  app.get("/api/filedReport", function (req, res) {
     var query = {};
     if (req.query.user_id) {
       req.query.user_id;
     }
 
-    db.Report.findAll({
-      //limit: 1,
+     return db.Report.count({
       where: query,
       include: [db.User]
-     // order: [ [ 'createAt', 'DESC']]
-    }).then(function (dbReport) {
-      res.json(dbReport);
-    });
+     
+    }).then(count => {
+      if (count != 0) {
+        return false;
+      }
+      return true;
+    } 
+    );
   });
-*/
+
   
 
   app.get("/api/asdfasdf", function (req, res) {

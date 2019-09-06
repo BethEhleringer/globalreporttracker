@@ -3,6 +3,8 @@ var userId
 var selUserReports = {};
 //var selUser = {};
 var selUser
+var pdqxyz = [];
+//var filedAReport
 var selUserForm = $("#selUser");
 var memberSelect = $("#member");
 var haveSubmitted = 0;
@@ -30,6 +32,7 @@ $(document).ready(function() {
     console.log("&&&&", data);
   }); */
 lastDate();
+//filedReport();
 
 // Adding an event listener for when the form is submitted
 
@@ -54,6 +57,7 @@ function handleFormTwoSubmit(event) {
   event.preventDefault();
   showReports();
 }
+
 //When button pushed route user to reportentry.html
 //$(fileRep).on("submit", goToReportEntry)
 
@@ -128,6 +132,16 @@ function showReports() {
    });
 };
 
+function filedAReport() {
+  $.get("/api/filedReport").then(function(data){
+    filedAReport = data;
+    console.log("123456", filedAReport);
+  })
+  console.log("asdfasdfadfsafsfdasf")
+}
+
+
+
 function lastDate() {
   $.get("/api/report_data").then(function(data) {
     //$.get("/api/last_report").then(function(data) {
@@ -143,16 +157,22 @@ function lastDate() {
 //THIS IS WHERE I NEED TO PUSH EACH VALUE THAT MEETS THE ABOVE CRITERIA INTO AN ARRAY SO I CAN 
 //COUNT THE LENGTH TO MAKE SURE IT IS NOT -1 AND IF IT IS -1 THEN HAVE A DIFFERENT MESSAGE.
       if (selUserReports[i].createdAt === undefined) {
+        
         $(".last-report-date").text("You haven't submitted any reports yet.")
       } else {
+        pdqxyz.push(i);
+        console.log(pdqxyz.length)
 $(".last-report-date").text(
         moment(selUserReports[i].createdAt).format("HH:MM, MMM DD, YYYY")
-      )}
+      );}
+      console.log("PDQXYZ")
     
       console.log("selUserReports.length= ", selUserReports.length)
-    } else {}
-   }
+    } 
+   } 
    });
+   console.log("User filed ", pdqxyz.length, " reports.");
+   if (pdqxyz == 0){$(".last-report-date").text("You haven't submitted any reports.")}
 };
 
 });
